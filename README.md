@@ -1,6 +1,6 @@
-1.	Sprendžiamo uždavinio aprašymas
+# 1.	Sprendžiamo uždavinio aprašymas
 
-1.1. Sistemos paskirtis
+## 1.1. Sistemos paskirtis
 
 Projekto tikslas – leisti greitai ir patogiai sukurti aukcionus bei nusipirkti aukcionuose parduodamas prekes.
 
@@ -8,7 +8,7 @@ Veikimo principas – pačią kuriamą platformą sudaro dvi dalys: internetinė
 
 Norėdamas nusipirkti aukcionuose parduodamas prekes bei kurti aukcionus naudotojas sistemoje turės užsiregistruoti. Užsiregistruodamas naudotojas turės nurodyti savo pavadinimą bei telefoną arba elektroninį paštą. Užsiregistravęs naudotojas galės sukurti aukcioną, priskirti aukcionui kategoriją, nustatyti pradinę kainą, minimalaus statymo sumą ir aukciono pabaigos laiką. Taip pat užsiregistravęs vartotojas galės statyti aukcionuose, kai pasirinks norimą statymo sumą. Pasibaigus aukcionui, jo kūrėjui bus rodomas aukcioną laimėjęs naudotojas. Administratorius galės nutraukti netinkamus aukcionus, pakeisti aukciono kategoriją.
 
-1.2. Funkciniai reikalavimai
+## 1.2. Funkciniai reikalavimai
 
 Svečias galės:
 
@@ -52,17 +52,21 @@ Administratorius galės:
 
 3.	Šalinti naudotojus.
 
+4.	Kurti kategorijas
 
-2.	Sistemos architektūra
+
+# 2.	Sistemos architektūra
 
 Sistemos sudedamosios dalys:
 
 •	Kliento pusė (ang. Front-End) – naudojant Angular karkasą;
 
-•	Serverio pusė (angl. Back-End) – naudojant Java Springboot . Duomenų bazė – MySQL.
+•	Serverio pusė (angl. Back-End) – naudojant .NET 7. Duomenų bazė – MS SQL.
 
-## 2.1 pav. Sistemos diegimo diagrama
-![DeploymentDiagram](https://github.com/GintarasBeskajev/Auction_Finder/assets/100523608/563781ea-9991-43eb-b623-075d1997be51)
+2.1 pav. Sistemos diegimo diagrama
+![image](https://github.com/GintarasBeskajev/Auction_Finder/assets/100523608/8925cabd-8643-4797-bd77-8b94c14c88c4)
+
+
 
 
 
