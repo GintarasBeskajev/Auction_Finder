@@ -61,8 +61,9 @@ Sistemos sudedamosios dalys:
 
 •	Serverio pusė (angl. Back-End) – naudojant Java Springboot . Duomenų bazė – MySQL.
 
-2.1 pav. Sistemos diegimo diagrama
-https://ibb.co/SngHh3W
+## 2.1 pav. Sistemos diegimo diagrama
+![DeploymentDiagram](https://github.com/GintarasBeskajev/Auction_Finder/assets/100523608/563781ea-9991-43eb-b623-075d1997be51)
+
 
 
 
