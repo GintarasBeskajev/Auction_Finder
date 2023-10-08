@@ -12,7 +12,7 @@ Norėdamas nusipirkti aukcionuose parduodamas prekes bei kurti aukcionus naudoto
 
 Svečias galės:
 
-1.	Peržiūrėti pagrindinį puslapį bei sukurtus aukcionus;
+1.	Peržiūrėti pagrindinį puslapį bei sukurtus aukcionus ir kategorijas;
 
 2.	Užsiregistruoti prie internetinės aplikacijos;
 
@@ -22,7 +22,6 @@ Svečias galės:
 Užsiregistravęs naudotojas galės:
 
 1.	Atsijungti nuo internetinės aplikacijos;
-
 
 2.	Susikurti aukcioną:
 
@@ -43,16 +42,26 @@ Užsiregistravęs naudotojas galės:
 7.	Peržiūrėti kitų sukurtus aktyvius aukcionus;
 
 8.	Peržiūrėti kitų vartotojų profilius;
+   
+9.	Redaguoti savo aukcionus.
+    
+10.	Peržiūrėti kategorijas.
  
 Administratorius galės:
 
-1.	Panaikinti netinkamus aukcionus.
+1.	Panaikinti netinkamus aukcionus;
 
-2.	Peržiūrėti aktyvius aukcionus.
+2.	Peržiūrėti aktyvius aukcionus;
 
-3.	Šalinti naudotojus.
+3.	Šalinti naudotojus;
 
-4.	Kurti kategorijas
+4.	Kurti kategorijas;
+   
+5.	Redaguoti kategorijas;
+   
+6.	Šalinti kategorijas;
+   
+7.	Peržiūrėti kategorijas.
 
 
 # 2.	Sistemos architektūra
