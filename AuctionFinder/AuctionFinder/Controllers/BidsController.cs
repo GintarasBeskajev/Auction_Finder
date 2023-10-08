@@ -1,0 +1,202 @@
+﻿using AuctionFinder.Data.Dtos.Auctions;
+using AuctionFinder.Data.Dtos.Bids;
+using AuctionFinder.Data.Dtos.Categories;
+using AuctionFinder.Data.Entities;
+using AuctionFinder.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
+
+namespace AuctionFinder.Controllers
+{
+    [ApiController]
+    [Route("api/categories/{categoryId}/auctions/{auctionId}/bids")]
+    public class BidsController : Controller
+    {
+        private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IAuctionsRepository _auctionsRepository;
+        private readonly IBidsRepository _bidsRepository;
+        public BidsController(ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository, IBidsRepository bidsRepository)
+        {
+            _categoriesRepository = categoriesRepository;
+            _auctionsRepository = auctionsRepository;
+            _bidsRepository = bidsRepository;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<BidDto>>> GetMany(int categoryId, int auctionId)
+        {
+            var category = await _categoriesRepository.GetSingleAsync(categoryId);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var auction = await _auctionsRepository.GetSingleAsync(auctionId);
+
+            if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var bids = await _bidsRepository.GetManyAsync();
+
+            return bids.Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate, 
+                entity.Auction)).ToList();
+        }
+
+        [HttpGet]
+        [Route("{bidId}"), ActionName("GetBid")]
+        public async Task<ActionResult<BidDto>> GetSingle(int categoryId, int auctionId, int bidId)
+        {
+            var category = await _categoriesRepository.GetSingleAsync(categoryId);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var auction = await _auctionsRepository.GetSingleAsync(auctionId);
+
+            if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var bid = await _bidsRepository.GetSingleAsync(bidId);
+
+            if (bid == null)
+            {
+                return NotFound();
+            }
+
+            return new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<BidDto>> Create(int categoryId, int auctionId, CreateBidDto createBidDto)
+        {
+            var category = await _categoriesRepository.GetSingleAsync(categoryId);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var auction = await _auctionsRepository.GetSingleAsync(auctionId);
+
+            if (auction == null)
+            {
+                return NotFound();
+            }
+
+            if (createBidDto.BidSize == 0)
+            {
+                return UnprocessableEntity();
+            }
+
+            if (string.IsNullOrWhiteSpace(createBidDto.Comment))
+            {
+                return UnprocessableEntity();
+            }
+
+            if (createBidDto.Comment.Length < 2 || createBidDto.Comment.Length > 500)
+            {
+                return UnprocessableEntity();
+            }
+
+            if (createBidDto.CreationDate < DateTime.Now)
+            {
+                return UnprocessableEntity();
+            }
+
+            if (createBidDto.CreationDate <= auction.StartDate || createBidDto.CreationDate >= auction.EndDate)
+            {
+                return UnprocessableEntity();
+            }
+
+            var bid = new Bid
+            {
+                BidSize = createBidDto.BidSize,
+                Comment = createBidDto.Comment,
+                CreationDate = createBidDto.CreationDate,
+                Auction = auction
+            };
+
+            await _bidsRepository.CreateAsync(bid);
+
+            return CreatedAtAction("GetBid", new { categoryId = category.Id, auctionId = auction.Id, bidId = bid.Id }, 
+                new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction));
+        }
+
+        [HttpPut]
+        [Route("{bidId}")]
+        public async Task<ActionResult<BidDto>> Update(int categoryId, int auctionId, int bidId,  UpdateBidDto updateBidDto)
+        {
+            var category = await _categoriesRepository.GetSingleAsync(categoryId);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var auction = await _auctionsRepository.GetSingleAsync(auctionId);
+
+            if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var bid = await _bidsRepository.GetSingleAsync(bidId);
+
+            if (bid == null)
+            {
+                return NotFound();
+            }
+
+            if (string.IsNullOrWhiteSpace(updateBidDto.Comment))
+            {
+                return UnprocessableEntity();
+            }
+
+            if (updateBidDto.Comment.Length < 2 || updateBidDto.Comment.Length > 500)
+            {
+                return UnprocessableEntity();
+            }
+
+            bid.Comment = updateBidDto.Comment;
+            await _bidsRepository.UpdateAsync(bid);
+
+            return Ok(new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction));
+        }
+
+        [HttpDelete]
+        [Route("{bidId}")]
+        public async Task<ActionResult> Remove(int categoryId, int auctionId, int bidId)
+        {
+            var category = await _categoriesRepository.GetSingleAsync(categoryId);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            var auction = await _auctionsRepository.GetSingleAsync(auctionId);
+
+            if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var bid = await _bidsRepository.GetSingleAsync(bidId);
+
+            if (bid == null)
+            {
+                return NotFound();
+            }
+
+            await _bidsRepository.DeleteAsync(bid);
+
+            return NoContent();
+        }
+    }
+}
