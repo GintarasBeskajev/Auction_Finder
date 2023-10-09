@@ -114,6 +114,22 @@ namespace AuctionFinder.Controllers
                 return UnprocessableEntity();
             }
 
+            var bids = await _bidsRepository.GetManyAsync();
+
+            var currentPostBids = bids.Where(entity => entity.Auction == auction)
+                .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
+                entity.Auction)).ToList();
+
+            if(currentPostBids.Count != 0)
+            {
+                var mostRecetTime = currentPostBids.Max(enitity => enitity.CreationDate);
+
+                if (createBidDto.CreationDate <= mostRecetTime)
+                {
+                    return UnprocessableEntity();
+                }
+            }
+
             var bid = new Bid
             {
                 BidSize = createBidDto.BidSize,
