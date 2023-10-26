@@ -11,7 +11,7 @@ namespace AuctionFinder.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoriesRepository _categoriesRepository;
-        public CategoriesController(ICategoriesRepository categoriesRepository) 
+        public CategoriesController(ICategoriesRepository categoriesRepository)
         {
             _categoriesRepository = categoriesRepository;
         }
@@ -30,9 +30,9 @@ namespace AuctionFinder.Controllers
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
 
-            if(category == null)
+            if (category == null)
             {
-                return NotFound();  
+                return NotFound();
             }
 
             return new CategoryDto(category.Id, category.Name);
@@ -103,7 +103,7 @@ namespace AuctionFinder.Controllers
 
             await _categoriesRepository.DeleteAsync(category);
 
-            return NoContent(); 
+            return NoContent();
         }
     }
 }

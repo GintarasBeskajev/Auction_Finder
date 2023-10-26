@@ -31,7 +31,7 @@ namespace AuctionFinder.Controllers
 
             var auctions = await _auctionsRepository.GetManyAsync();
 
-            return auctions.Select(entity => new AuctionDto(entity.Id, entity.Name,
+            return auctions.Where(entity => entity.Category == category).Select(entity => new AuctionDto(entity.Id, entity.Name,
                 entity.Description, entity.StartDate, entity.EndDate, entity.Category)).ToList();
         }
 
@@ -46,6 +46,12 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
@@ -53,7 +59,14 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
-            return new AuctionDto(auction.Id, auction.Name, auction.Description, 
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
+            {
+                return NotFound();
+            }
+
+            return new AuctionDto(auction.Id, auction.Name, auction.Description,
                 auction.StartDate, auction.EndDate, auction.Category);
         }
 
@@ -87,22 +100,23 @@ namespace AuctionFinder.Controllers
                 return UnprocessableEntity();
             }
 
-            if (createAuctionDto.StartDate < DateTime.Now || createAuctionDto.EndDate < DateTime.Now)
-            {
-                return UnprocessableEntity();
-            }
-
             if (createAuctionDto.EndDate <= createAuctionDto.StartDate)
             {
                 return UnprocessableEntity();
             }
 
-            var auction = new Auction { Name = createAuctionDto.Name, Description = createAuctionDto.Description, 
-                StartDate = createAuctionDto.StartDate, EndDate = createAuctionDto.EndDate, Category = category };
+            var auction = new Auction
+            {
+                Name = createAuctionDto.Name,
+                Description = createAuctionDto.Description,
+                StartDate = createAuctionDto.StartDate,
+                EndDate = createAuctionDto.EndDate,
+                Category = category
+            };
 
             await _auctionsRepository.CreateAsync(auction);
 
-            return CreatedAtAction("GetAuction", new { categoryId = category.Id, auctionId = auction.Id }, new AuctionDto(auction.Id, 
+            return CreatedAtAction("GetAuction", new { categoryId = category.Id, auctionId = auction.Id }, new AuctionDto(auction.Id,
                 auction.Name, auction.Description, auction.StartDate, auction.EndDate, auction.Category));
         }
 
@@ -117,9 +131,22 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
             {
                 return NotFound();
             }
@@ -163,9 +190,22 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
+            {
+                return NotFound();
+            }
+
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
             {
                 return NotFound();
             }

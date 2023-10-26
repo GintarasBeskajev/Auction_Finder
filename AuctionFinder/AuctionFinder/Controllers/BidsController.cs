@@ -31,6 +31,12 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
@@ -38,9 +44,16 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
+            {
+                return NotFound();
+            }
+
             var bids = await _bidsRepository.GetManyAsync();
 
-            return bids.Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate, 
+            return bids.Where(entity => entity.Auction == auction).Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
                 entity.Auction)).ToList();
         }
 
@@ -55,6 +68,12 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
@@ -62,9 +81,29 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
+            {
+                return NotFound();
+            }
+
+            var bids = await _bidsRepository.GetManyAsync();
+
+            var currentPostBids = bids.Where(entity => entity.Auction == auction)
+                .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
+                entity.Auction)).ToList();
+
             var bid = await _bidsRepository.GetSingleAsync(bidId);
 
             if (bid == null)
+            {
+                return NotFound();
+            }
+
+            var currentBidContainment = currentPostBids.Where(entity => entity.Id == bid.Id).FirstOrDefault();
+
+            if (currentBidContainment == null)
             {
                 return NotFound();
             }
@@ -82,12 +121,32 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
             {
                 return NotFound();
             }
+
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
+            {
+                return NotFound();
+            }
+
+            var bids = await _bidsRepository.GetManyAsync();
+
+            var currentPostBids = bids.Where(entity => entity.Auction == auction)
+                .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
+                entity.Auction)).ToList();
+
 
             if (createBidDto.BidSize == 0)
             {
@@ -114,17 +173,18 @@ namespace AuctionFinder.Controllers
                 return UnprocessableEntity();
             }
 
-            var bids = await _bidsRepository.GetManyAsync();
-
-            var currentPostBids = bids.Where(entity => entity.Auction == auction)
-                .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction)).ToList();
-
-            if(currentPostBids.Count != 0)
+            if (currentPostBids.Count != 0)
             {
                 var mostRecetTime = currentPostBids.Max(enitity => enitity.CreationDate);
 
                 if (createBidDto.CreationDate <= mostRecetTime)
+                {
+                    return UnprocessableEntity();
+                }
+
+                var highestBid = currentPostBids.Max(enitity => enitity.BidSize);
+
+                if (createBidDto.BidSize <= highestBid)
                 {
                     return UnprocessableEntity();
                 }
@@ -140,13 +200,13 @@ namespace AuctionFinder.Controllers
 
             await _bidsRepository.CreateAsync(bid);
 
-            return CreatedAtAction("GetBid", new { categoryId = category.Id, auctionId = auction.Id, bidId = bid.Id }, 
+            return CreatedAtAction("GetBid", new { categoryId = category.Id, auctionId = auction.Id, bidId = bid.Id },
                 new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction));
         }
 
         [HttpPut]
         [Route("{bidId}")]
-        public async Task<ActionResult<BidDto>> Update(int categoryId, int auctionId, int bidId,  UpdateBidDto updateBidDto)
+        public async Task<ActionResult<BidDto>> Update(int categoryId, int auctionId, int bidId, UpdateBidDto updateBidDto)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
 
@@ -155,6 +215,12 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
@@ -162,9 +228,29 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
+            {
+                return NotFound();
+            }
+
+            var bids = await _bidsRepository.GetManyAsync();
+
+            var currentPostBids = bids.Where(entity => entity.Auction == auction)
+                .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
+                entity.Auction)).ToList();
+
             var bid = await _bidsRepository.GetSingleAsync(bidId);
 
             if (bid == null)
+            {
+                return NotFound();
+            }
+
+            var currentBidContainment = currentPostBids.Where(entity => entity.Id == bid.Id).FirstOrDefault();
+
+            if (currentBidContainment == null)
             {
                 return NotFound();
             }
@@ -196,6 +282,12 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var auctions = await _auctionsRepository.GetManyAsync();
+
+            var currentAuctions = auctions.Where(entity => entity.Category == category)
+                .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
+                entity.EndDate, entity.Category)).ToList();
+
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
             if (auction == null)
@@ -203,9 +295,29 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
+            var currentAuctionContainment = currentAuctions.Where(entity => entity.Id == auction.Id).FirstOrDefault();
+
+            if (currentAuctionContainment == null)
+            {
+                return NotFound();
+            }
+
+            var bids = await _bidsRepository.GetManyAsync();
+
+            var currentPostBids = bids.Where(entity => entity.Auction == auction)
+                .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
+                entity.Auction)).ToList();
+
             var bid = await _bidsRepository.GetSingleAsync(bidId);
 
             if (bid == null)
+            {
+                return NotFound();
+            }
+
+            var currentBidContainment = currentPostBids.Where(entity => entity.Id == bid.Id).FirstOrDefault();
+
+            if (currentBidContainment == null)
             {
                 return NotFound();
             }
