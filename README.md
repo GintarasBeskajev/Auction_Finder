@@ -62,6 +62,8 @@ Administratorius galės:
 6.	Šalinti kategorijas;
    
 7.	Peržiūrėti kategorijas.
+   
+8.	Atlikti tuos pačius veiksmus kaip ir naudotojas.
 
 
 # 2.	Sistemos architektūra
