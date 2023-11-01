@@ -63,7 +63,7 @@ Administratorius galės:
    
 7.	Peržiūrėti kategorijas.
    
-8.	Atlikti tuos pačius veiksmus kaip ir naudotojas.
+8.	Atlikti tuos pačius veiksmus kaip ir užsiregistravęs naudotojas.
 
 
 # 2.	Sistemos architektūra
