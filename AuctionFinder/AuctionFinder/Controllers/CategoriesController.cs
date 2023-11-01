@@ -1,8 +1,12 @@
-﻿using AuctionFinder.Data.Dtos.Auctions;
+﻿using AuctionFinder.Auth.Model;
+using AuctionFinder.Data.Dtos.Auctions;
 using AuctionFinder.Data.Dtos.Categories;
 using AuctionFinder.Data.Entities;
 using AuctionFinder.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace AuctionFinder.Controllers
 {
@@ -39,6 +43,7 @@ namespace AuctionFinder.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = AuctionFinderRoles.Admin)]
         public async Task<ActionResult<CategoryDto>> Create(CreateCategoryDto createCategoryDto)
         {
             if (string.IsNullOrWhiteSpace(createCategoryDto.Name))
@@ -51,7 +56,7 @@ namespace AuctionFinder.Controllers
                 return UnprocessableEntity();
             }
 
-            var category = new Category { Name = createCategoryDto.Name };
+            var category = new Category { Name = createCategoryDto.Name, UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub) };
 
             await _categoriesRepository.CreateAsync(category);
 
@@ -60,6 +65,7 @@ namespace AuctionFinder.Controllers
 
         [HttpPut]
         [Route("{categoryId}")]
+        [Authorize(Roles = AuctionFinderRoles.Admin)]
         public async Task<ActionResult<CategoryDto>> Update(int categoryId, UpdateCategoryDto updateCategoryDto)
         {
             if (string.IsNullOrWhiteSpace(updateCategoryDto.Name))
@@ -92,6 +98,7 @@ namespace AuctionFinder.Controllers
 
         [HttpDelete]
         [Route("{categoryId}")]
+        [Authorize(Roles = AuctionFinderRoles.Admin)]
         public async Task<ActionResult> Remove(int categoryId)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);

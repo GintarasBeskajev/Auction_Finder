@@ -1,9 +1,13 @@
-﻿using AuctionFinder.Data.Dtos.Auctions;
+﻿using AuctionFinder.Auth.Model;
+using AuctionFinder.Data.Dtos.Auctions;
 using AuctionFinder.Data.Dtos.Bids;
 using AuctionFinder.Data.Dtos.Categories;
 using AuctionFinder.Data.Entities;
 using AuctionFinder.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace AuctionFinder.Controllers
 {
@@ -14,11 +18,14 @@ namespace AuctionFinder.Controllers
         private readonly ICategoriesRepository _categoriesRepository;
         private readonly IAuctionsRepository _auctionsRepository;
         private readonly IBidsRepository _bidsRepository;
-        public BidsController(ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository, IBidsRepository bidsRepository)
+        private readonly IAuthorizationService _authorizationService;
+
+        public BidsController(ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository, IBidsRepository bidsRepository, IAuthorizationService authorizationService)
         {
             _categoriesRepository = categoriesRepository;
             _auctionsRepository = auctionsRepository;
             _bidsRepository = bidsRepository;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -195,7 +202,8 @@ namespace AuctionFinder.Controllers
                 BidSize = createBidDto.BidSize,
                 Comment = createBidDto.Comment,
                 CreationDate = createBidDto.CreationDate,
-                Auction = auction
+                Auction = auction,
+                UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub)
             };
 
             await _bidsRepository.CreateAsync(bid);
@@ -253,6 +261,12 @@ namespace AuctionFinder.Controllers
             if (currentBidContainment == null)
             {
                 return NotFound();
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, auction, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();
             }
 
             if (string.IsNullOrWhiteSpace(updateBidDto.Comment))
@@ -320,6 +334,12 @@ namespace AuctionFinder.Controllers
             if (currentBidContainment == null)
             {
                 return NotFound();
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, auction, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();
             }
 
             await _bidsRepository.DeleteAsync(bid);

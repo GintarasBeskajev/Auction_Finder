@@ -1,9 +1,12 @@
-﻿using AuctionFinder.Data.Dtos.Auctions;
+﻿using AuctionFinder.Auth.Model;
+using AuctionFinder.Data.Dtos.Auctions;
 using AuctionFinder.Data.Dtos.Categories;
 using AuctionFinder.Data.Entities;
 using AuctionFinder.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace AuctionFinder.Controllers
 {
@@ -13,10 +16,13 @@ namespace AuctionFinder.Controllers
     {
         private readonly ICategoriesRepository _categoriesRepository;
         private readonly IAuctionsRepository _auctionsRepository;
-        public AuctionsController(ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository)
+        private readonly IAuthorizationService _authorizationService;
+
+        public AuctionsController(ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository, IAuthorizationService authorizationService)
         {
             _categoriesRepository = categoriesRepository;
             _auctionsRepository = auctionsRepository;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -71,6 +77,7 @@ namespace AuctionFinder.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
         public async Task<ActionResult<AuctionDto>> Create(int categoryId, CreateAuctionDto createAuctionDto)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
@@ -111,7 +118,8 @@ namespace AuctionFinder.Controllers
                 Description = createAuctionDto.Description,
                 StartDate = createAuctionDto.StartDate,
                 EndDate = createAuctionDto.EndDate,
-                Category = category
+                Category = category,
+                UserId = User.FindFirstValue(JwtRegisteredClaimNames.Sub)
             };
 
             await _auctionsRepository.CreateAsync(auction);
@@ -122,6 +130,7 @@ namespace AuctionFinder.Controllers
 
         [HttpPut]
         [Route("{auctionId}")]
+        [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
         public async Task<ActionResult<AuctionDto>> Update(int categoryId, int auctionId, UpdateAuctionDto updateAuctionDto)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
@@ -149,6 +158,12 @@ namespace AuctionFinder.Controllers
             if (currentAuctionContainment == null)
             {
                 return NotFound();
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, auction, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();
             }
 
             if (string.IsNullOrWhiteSpace(updateAuctionDto.Name))
@@ -181,6 +196,7 @@ namespace AuctionFinder.Controllers
 
         [HttpDelete]
         [Route("{auctionId}")]
+        [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
         public async Task<ActionResult> Remove(int categoryId, int auctionId)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
@@ -208,6 +224,12 @@ namespace AuctionFinder.Controllers
             if (currentAuctionContainment == null)
             {
                 return NotFound();
+            }
+
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, auction, PolicyNames.ResourceOwner);
+            if (!authorizationResult.Succeeded)
+            {
+                return Forbid();
             }
 
             await _auctionsRepository.DeleteAsync(auction);
