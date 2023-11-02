@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gintaras\\source\\repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {}
+    "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gintaras\\source\\repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {
+    "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gintaras\\source\\repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+        "projectUniqueName": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
         "projectName": "AuctionFinder",
-        "projectPath": "C:\\Users\\Gintaras\\source\\repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+        "projectPath": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
         "packagesPath": "C:\\Users\\Gintaras\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gintaras\\source\\repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\obj\\",
+        "outputPath": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

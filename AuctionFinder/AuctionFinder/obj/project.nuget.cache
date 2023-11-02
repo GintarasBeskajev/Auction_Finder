@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pCu2I6N0yiXTLIDauwIlfezKPshi0WBZqPqhXAjsVdGaYtqlrdkdyUFldtcM8gQrKNSW7lBuoejaMKb2mzDNBg==",
+  "dgSpecHash": "ajFmHctZhmhCt4l1NRQ8XwzaXH1BmXoq56JAGhyCzEOdejT83DjrRLGSmEvW8IZEYsVp+ZakgBEmNCTe2j7umw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Gintaras\\source\\repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+  "projectFilePath": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Gintaras\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Gintaras\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

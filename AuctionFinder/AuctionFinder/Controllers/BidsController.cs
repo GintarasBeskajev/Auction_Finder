@@ -263,7 +263,7 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, auction, PolicyNames.ResourceOwner);
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, bid, PolicyNames.ResourceOwner);
             if (!authorizationResult.Succeeded)
             {
                 return Forbid();
@@ -336,7 +336,7 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
-            var authorizationResult = await _authorizationService.AuthorizeAsync(User, auction, PolicyNames.ResourceOwner);
+            var authorizationResult = await _authorizationService.AuthorizeAsync(User, bid, PolicyNames.ResourceOwner);
             if (!authorizationResult.Succeeded)
             {
                 return Forbid();
