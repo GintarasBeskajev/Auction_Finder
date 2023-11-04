@@ -4,11 +4,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY Auction_Finder/AuctionFinder/AuctionFinder/*.csproj .
+COPY source/AuctionFinder/AuctionFinder/*.csproj .
 RUN dotnet restore --ucr
 
 # copy and publish app and libraries
-COPY Auction_Finder/AuctionFinder/AuctionFinder/. .
+COPY source/AuctionFinder/AuctionFinder/. .
 RUN dotnet publish --ucr --no-restore  -o /app
 
 # final stage/image
