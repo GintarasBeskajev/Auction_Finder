@@ -1,22 +1,19 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
-ARG TARGETARCH
+FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY source/AuctionFinder/AuctionFinder/*.csproj .
-RUN dotnet restore -a $TARGETARCH
+RUN dotnet restore --ucr
 
-# copy and publish app and libraries
+# copy everything else and build app
 COPY source/AuctionFinder/AuctionFinder/. .
-RUN dotnet publish --no-restore -a $TARGETARCH -o /app
+RUN dotnet publish --ucr --no-restore -o /app
 
-
-# Enable globalization and time zones:
-# https://github.com/dotnet/dotnet-docker/blob/main/samples/enable-globalization.md
 # final stage/image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022
 WORKDIR /app
 COPY --from=build /app .
+USER ContainerUser
 ENTRYPOINT ["./AuctionFinder/AuctionFinder"]
