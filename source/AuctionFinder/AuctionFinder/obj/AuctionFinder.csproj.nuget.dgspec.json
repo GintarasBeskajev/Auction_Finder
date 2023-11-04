@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {}
+    "C:\\Users\\rasa_b\\source\\repos\\Auction_Finder\\source\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {
+    "C:\\Users\\rasa_b\\source\\repos\\Auction_Finder\\source\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+        "projectUniqueName": "C:\\Users\\rasa_b\\source\\repos\\Auction_Finder\\source\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
         "projectName": "AuctionFinder",
-        "projectPath": "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+        "projectPath": "C:\\Users\\rasa_b\\source\\repos\\Auction_Finder\\source\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
         "packagesPath": "C:\\Users\\rasa_b\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\obj\\",
+        "outputPath": "C:\\Users\\rasa_b\\source\\repos\\Auction_Finder\\source\\AuctionFinder\\AuctionFinder\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rasa_b\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -58,21 +58,21 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.13, )"
+              "version": "[6.0.24, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.13, )"
+              "version": "[6.0.24, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.13, )"
+              "version": "[6.0.24, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[7.0.11, )"
+              "version": "[6.0.22, )"
             }
           },
           "imports": [

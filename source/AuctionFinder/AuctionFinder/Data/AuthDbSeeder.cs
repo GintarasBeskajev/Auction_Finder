@@ -1,7 +1,5 @@
 ﻿using AuctionFinder.Auth.Model;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Identity.Client;
-using System.Data;
 
 namespace AuctionFinder.Data
 {
