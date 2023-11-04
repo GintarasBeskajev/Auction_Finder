@@ -12,6 +12,13 @@ namespace AuctionFinder.Data
         public DbSet<Auction> Auctions { get; set; }
         public DbSet<Bid> Bids { get; set; }
 
+        private readonly IConfiguration _configuration;
+
+        public AuctionsDbContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -31,7 +38,7 @@ namespace AuctionFinder.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=AuctionsDb11-01_1");
+            optionsBuilder.UseNpgsql(_configuration.GetValue<string>("PostgreSQLConnectionString"));
         }
     }
 }

@@ -5,10 +5,14 @@ using AuctionFinder.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
+//dotnet ef migrations add 'migrationname'
+//dotnet ef migrations remove
+//dotnet ef database drop
 var builder = WebApplication.CreateBuilder(args);
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -66,6 +70,10 @@ app.UseRouting();
 app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
+
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<AuctionsDbContext>();
+dbContext.Database.Migrate();
 
 var dbSeeder = app.Services.CreateScope().ServiceProvider.GetRequiredService<AuthDbSeeder>();
 await dbSeeder.SeedAsync();

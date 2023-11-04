@@ -7,6 +7,11 @@
       "type": "mssql",
       "connectionId": "AuctionFinderLocalDB",
       "dynamicId": null
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Server1",
+      "dynamicId": null
     }
   }
 }

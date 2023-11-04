@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {}
+    "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {
+    "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+        "projectUniqueName": "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
         "projectName": "AuctionFinder",
-        "projectPath": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
-        "packagesPath": "C:\\Users\\Gintaras\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gintaras\\Desktop\\Auction_Finder_Test1\\Auction_Finder\\AuctionFinder\\AuctionFinder\\obj\\",
+        "projectPath": "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\AuctionFinder.csproj",
+        "packagesPath": "C:\\Users\\rasa_b\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\rasa_b\\Source\\Repos\\Auction_Finder\\AuctionFinder\\AuctionFinder\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Gintaras\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\rasa_b\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -62,15 +58,19 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.11, )"
+              "version": "[7.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.11, )"
+              "version": "[7.0.13, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[7.0.11, )"
             }
@@ -94,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
