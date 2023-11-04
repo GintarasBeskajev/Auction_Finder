@@ -1,21 +1,19 @@
-# Use a Windows base image
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022 AS build
-WORKDIR C:\source
+WORKDIR /source
 
-# Copy csproj and restore as distinct layers
-COPY source\AuctionFinder\AuctionFinder\*.csproj .
-RUN dotnet restore
+# copy csproj and restore as distinct layers
+COPY source/AuctionFinder/AuctionFinder/*.csproj .
+RUN dotnet restore --ucr
 
-# Copy everything else and build the app
-COPY source\AuctionFinder\AuctionFinder\ .
-RUN dotnet publish --no-restore -o C:\app
+# copy everything else and build app
+COPY source/AuctionFinder/AuctionFinder/. .
+RUN dotnet publish --ucr --no-restore -o /app
 
-# Final stage/image
+# final stage/image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022
-WORKDIR C:\app
-COPY --from=build C:\app .
-
-# User directive for Windows containers
+WORKDIR /app
+COPY --from=build /app .
 USER ContainerUser
-
-ENTRYPOINT ["AuctionFinder\\AuctionFinder.exe"]
+ENTRYPOINT ["./AuctionFinder/AuctionFinder"]
