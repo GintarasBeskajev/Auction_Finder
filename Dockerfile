@@ -14,8 +14,12 @@ RUN dotnet restore AuctionFinder.csproj
 COPY source/AuctionFinder/AuctionFinder/ .
 RUN dotnet build AuctionFinder.csproj -c Release -o /app/build
 
-# Create a final image that only contains the published application
-FROM base AS final
+# Create a stage for adding the required framework
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS framework
 WORKDIR /app
-COPY --from=build /app/build .
+RUN dotnet publish -c Release -o /app
+
+# Create a final image that includes the published application and the framework
+FROM base AS final
+COPY --from=framework /app /app
 ENTRYPOINT ["dotnet", "AuctionFinder.dll"]
