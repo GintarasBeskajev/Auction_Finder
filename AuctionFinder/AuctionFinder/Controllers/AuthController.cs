@@ -110,14 +110,9 @@ namespace AuctionFinder.Controllers
 
         [HttpPost]
         [Route("logout")]
-        public async Task<IActionResult> Logout(RefreshAccessTokenDto refreshAccessTokenDto)
+        public async Task<IActionResult> Logout()
         {
-            if (!_jwtTokenService.TryParseRefreshToken(refreshAccessTokenDto.RefreshToken, out var claims))
-            {
-                return UnprocessableEntity();
-            }
-
-            var userId = claims.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var userId = User.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
