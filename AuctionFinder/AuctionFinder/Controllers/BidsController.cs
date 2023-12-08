@@ -42,7 +42,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -61,7 +61,7 @@ namespace AuctionFinder.Controllers
             var bids = await _bidsRepository.GetManyAsync();
 
             return bids.Where(entity => entity.Auction == auction).Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction)).ToList();
+                entity.Auction, entity.UserId)).ToList();
         }
 
         [HttpGet]
@@ -79,7 +79,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -99,7 +99,7 @@ namespace AuctionFinder.Controllers
 
             var currentPostBids = bids.Where(entity => entity.Auction == auction)
                 .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction)).ToList();
+                entity.Auction, entity.UserId)).ToList();
 
             var bid = await _bidsRepository.GetSingleAsync(bidId);
 
@@ -115,7 +115,7 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
-            return new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction);
+            return new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction, bid.UserId);
         }
 
         [HttpPost]
@@ -132,7 +132,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -152,7 +152,7 @@ namespace AuctionFinder.Controllers
 
             var currentPostBids = bids.Where(entity => entity.Auction == auction)
                 .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction)).ToList();
+                entity.Auction, entity.UserId)).ToList();
 
 
             if (createBidDto.BidSize == 0)
@@ -209,7 +209,7 @@ namespace AuctionFinder.Controllers
             await _bidsRepository.CreateAsync(bid);
 
             return CreatedAtAction("GetBid", new { categoryId = category.Id, auctionId = auction.Id, bidId = bid.Id },
-                new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction));
+                new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction, bid.UserId));
         }
 
         [HttpPut]
@@ -227,7 +227,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -247,7 +247,7 @@ namespace AuctionFinder.Controllers
 
             var currentPostBids = bids.Where(entity => entity.Auction == auction)
                 .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction)).ToList();
+                entity.Auction, entity.UserId)).ToList();
 
             var bid = await _bidsRepository.GetSingleAsync(bidId);
 
@@ -282,7 +282,7 @@ namespace AuctionFinder.Controllers
             bid.Comment = updateBidDto.Comment;
             await _bidsRepository.UpdateAsync(bid);
 
-            return Ok(new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction));
+            return Ok(new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction, bid.UserId));
         }
 
         [HttpDelete]
@@ -300,7 +300,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -320,7 +320,7 @@ namespace AuctionFinder.Controllers
 
             var currentPostBids = bids.Where(entity => entity.Auction == auction)
                 .Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction)).ToList();
+                entity.Auction, entity.UserId)).ToList();
 
             var bid = await _bidsRepository.GetSingleAsync(bidId);
 

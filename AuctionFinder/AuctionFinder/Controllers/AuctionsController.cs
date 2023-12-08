@@ -38,7 +38,7 @@ namespace AuctionFinder.Controllers
             var auctions = await _auctionsRepository.GetManyAsync();
 
             return auctions.Where(entity => entity.Category == category).Select(entity => new AuctionDto(entity.Id, entity.Name,
-                entity.Description, entity.StartDate, entity.EndDate, entity.Category)).ToList();
+                entity.Description, entity.StartDate, entity.EndDate, entity.Category, entity.UserId)).ToList();
         }
 
         [HttpGet]
@@ -56,7 +56,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -73,7 +73,7 @@ namespace AuctionFinder.Controllers
             }
 
             return new AuctionDto(auction.Id, auction.Name, auction.Description,
-                auction.StartDate, auction.EndDate, auction.Category);
+                auction.StartDate, auction.EndDate, auction.Category, auction.UserId);
         }
 
         [HttpPost]
@@ -125,7 +125,7 @@ namespace AuctionFinder.Controllers
             await _auctionsRepository.CreateAsync(auction);
 
             return CreatedAtAction("GetAuction", new { categoryId = category.Id, auctionId = auction.Id }, new AuctionDto(auction.Id,
-                auction.Name, auction.Description, auction.StartDate, auction.EndDate, auction.Category));
+                auction.Name, auction.Description, auction.StartDate, auction.EndDate, auction.Category, auction.UserId));
         }
 
         [HttpPut]
@@ -144,7 +144,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
@@ -210,7 +210,7 @@ namespace AuctionFinder.Controllers
 
             var currentAuctions = auctions.Where(entity => entity.Category == category)
                 .Select(entity => new AuctionDto(entity.Id, entity.Name, entity.Description, entity.StartDate,
-                entity.EndDate, entity.Category)).ToList();
+                entity.EndDate, entity.Category, entity.UserId)).ToList();
 
             var auction = await _auctionsRepository.GetSingleAsync(auctionId);
 
