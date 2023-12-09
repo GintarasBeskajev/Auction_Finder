@@ -40,12 +40,10 @@ Užsiregistravęs naudotojas galės:
 6.	Peržiūrėti savo sukurtus pasibaigusius aukcionus;
 
 7.	Peržiūrėti kitų sukurtus aktyvius aukcionus;
-
-8.	Peržiūrėti kitų vartotojų profilius;
    
-9.	Redaguoti savo aukcionus.
+8.	Redaguoti savo aukcionus.
     
-10.	Peržiūrėti kategorijas.
+9.	Peržiūrėti kategorijas.
  
 Administratorius galės:
 
