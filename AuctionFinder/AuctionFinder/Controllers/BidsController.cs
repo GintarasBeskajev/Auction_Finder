@@ -5,9 +5,12 @@ using AuctionFinder.Data.Dtos.Categories;
 using AuctionFinder.Data.Entities;
 using AuctionFinder.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace AuctionFinder.Controllers
 {
@@ -19,17 +22,19 @@ namespace AuctionFinder.Controllers
         private readonly IAuctionsRepository _auctionsRepository;
         private readonly IBidsRepository _bidsRepository;
         private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<AuctionFinderUser> _userManager;
 
-        public BidsController(ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository, IBidsRepository bidsRepository, IAuthorizationService authorizationService)
+        public BidsController(UserManager<AuctionFinderUser> userManager, ICategoriesRepository categoriesRepository, IAuctionsRepository auctionsRepository, IBidsRepository bidsRepository, IAuthorizationService authorizationService)
         {
             _categoriesRepository = categoriesRepository;
             _auctionsRepository = auctionsRepository;
             _bidsRepository = bidsRepository;
             _authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<BidDto>>> GetMany(int categoryId, int auctionId)
+        public async Task<ActionResult<List<GetBidDto>>> GetMany(int categoryId, int auctionId)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
 
@@ -59,14 +64,32 @@ namespace AuctionFinder.Controllers
             }
 
             var bids = await _bidsRepository.GetManyAsync();
+            List<FinalBid> finalBids = new List<FinalBid>();
 
-            return bids.Where(entity => entity.Auction == auction).Select(entity => new BidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
-                entity.Auction, entity.UserId)).ToList();
+            foreach (var bid in bids)
+            {
+                var user = await _userManager.FindByIdAsync(bid.UserId);
+
+                FinalBid finalBid = new FinalBid();
+                finalBid.Id = bid.Id;
+                finalBid.BidSize = bid.BidSize;
+                finalBid.Comment = bid.Comment;
+                finalBid.CreationDate = bid.CreationDate;
+                finalBid.Auction = bid.Auction;
+                finalBid.UserId = bid.UserId;
+                finalBid.UserEmail = user.Email;
+
+                finalBids.Add(finalBid);
+            }
+
+
+            return finalBids.Where(entity => entity.Auction == auction).Select(entity => new GetBidDto(entity.Id, entity.BidSize, entity.Comment, entity.CreationDate,
+                entity.Auction, entity.UserId, entity.UserEmail)).ToList();
         }
 
         [HttpGet]
         [Route("{bidId}"), ActionName("GetBid")]
-        public async Task<ActionResult<BidDto>> GetSingle(int categoryId, int auctionId, int bidId)
+        public async Task<ActionResult<GetBidDto>> GetSingle(int categoryId, int auctionId, int bidId)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
 
@@ -115,7 +138,9 @@ namespace AuctionFinder.Controllers
                 return NotFound();
             }
 
-            return new BidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction, bid.UserId);
+            var user = await _userManager.FindByIdAsync(bid.UserId);
+
+            return new GetBidDto(bid.Id, bid.BidSize, bid.Comment, bid.CreationDate, bid.Auction, bid.UserId, user.Email);
         }
 
         [HttpPost]
