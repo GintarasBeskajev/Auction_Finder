@@ -42,14 +42,16 @@ Užsiregistravęs naudotojas galės:
 7.	Peržiūrėti kitų sukurtus aktyvius aukcionus;
    
 8.	Redaguoti savo aukcionus.
+
+9. Naikinti savo aukcionus.
     
-9.	Peržiūrėti kategorijas.
+10. Peržiūrėti kategorijas.
  
 Administratorius galės:
 
 1.	Panaikinti netinkamus aukcionus;
 
-2.	Peržiūrėti aktyvius aukcionus;
+2.	Peržiūrėti visus aukcionus;
 
 3.	Šalinti naudotojus;
 
@@ -58,10 +60,8 @@ Administratorius galės:
 5.	Redaguoti kategorijas;
    
 6.	Šalinti kategorijas;
-   
-7.	Peržiūrėti kategorijas.
-   
-8.	Atlikti tuos pačius veiksmus kaip ir užsiregistravęs naudotojas.
+
+7.	Atlikti tuos pačius veiksmus kaip ir užsiregistravęs naudotojas.
 
 
 # 2.	Sistemos architektūra
