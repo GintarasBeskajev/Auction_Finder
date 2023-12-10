@@ -195,11 +195,6 @@ namespace AuctionFinder.Controllers
                 return UnprocessableEntity();
             }
 
-            if (createBidDto.CreationDate < DateTime.Now)
-            {
-                return UnprocessableEntity();
-            }
-
             if (createBidDto.CreationDate <= auction.StartDate || createBidDto.CreationDate >= auction.EndDate)
             {
                 return UnprocessableEntity();
