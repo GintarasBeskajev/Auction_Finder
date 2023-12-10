@@ -46,6 +46,12 @@ Užsiregistravęs naudotojas galės:
 9. Naikinti savo aukcionus.
     
 10. Peržiūrėti kategorijas.
+    
+11. Peržiūrėti savo statymus.
+
+12. Naikinti savo statymus.
+
+13. Redaguoti savo statymus.
  
 Administratorius galės:
 
