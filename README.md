@@ -70,7 +70,7 @@ Sistemos sudedamosios dalys:
 
 •	Kliento pusė (ang. Front-End) – naudojant Angular karkasą;
 
-•	Serverio pusė (angl. Back-End) – naudojant .NET 7. Duomenų bazė – MS SQL.
+•	Serverio pusė (angl. Back-End) – naudojant .NET 7. Duomenų bazė – PostgreSQL.
 
 2.1 pav. Sistemos diegimo diagrama
 ![image](https://github.com/GintarasBeskajev/Auction_Finder/assets/100523608/8925cabd-8643-4797-bd77-8b94c14c88c4)
