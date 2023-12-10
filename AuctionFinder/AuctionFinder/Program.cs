@@ -56,7 +56,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularApp",
         builder =>
         {
-            builder.WithOrigins("http://localhost:4200")
+            builder.WithOrigins("https://auction-finder-frontend-9lqyri67u-gintaras-projects.vercel.app/")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials();
