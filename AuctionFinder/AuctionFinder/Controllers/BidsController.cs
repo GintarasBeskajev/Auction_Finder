@@ -144,6 +144,7 @@ namespace AuctionFinder.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
         public async Task<ActionResult<BidDto>> Create(int categoryId, int auctionId, CreateBidDto createBidDto)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
@@ -234,6 +235,7 @@ namespace AuctionFinder.Controllers
 
         [HttpPut]
         [Route("{bidId}")]
+        [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
         public async Task<ActionResult<BidDto>> Update(int categoryId, int auctionId, int bidId, UpdateBidDto updateBidDto)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
@@ -307,6 +309,7 @@ namespace AuctionFinder.Controllers
 
         [HttpDelete]
         [Route("{bidId}")]
+        [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
         public async Task<ActionResult> Remove(int categoryId, int auctionId, int bidId)
         {
             var category = await _categoriesRepository.GetSingleAsync(categoryId);
