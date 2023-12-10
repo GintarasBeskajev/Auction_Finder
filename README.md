@@ -6,7 +6,7 @@ Projekto tikslas – leisti greitai ir patogiai sukurti aukcionus bei nusipirkti
 
 Veikimo principas – pačią kuriamą platformą sudaro dvi dalys: internetinė aplikacija, kuria naudosis žmonės norintys sukurti aukcionus ir nusipirkti aukcionuose parduodamas prekes, administratorius bei aplikacijų programavimo sąsaja.
 
-Norėdamas nusipirkti aukcionuose parduodamas prekes bei kurti aukcionus naudotojas sistemoje turės užsiregistruoti. Užsiregistruodamas naudotojas turės nurodyti savo pavadinimą bei telefoną arba elektroninį paštą. Užsiregistravęs naudotojas galės sukurti aukcioną, priskirti aukcionui kategoriją ir nustatyti aukciono pabaigos laiką. Taip pat užsiregistravęs vartotojas galės statyti aukcionuose, kai pasirinks norimą statymo sumą. Pasibaigus aukcionui, jo kūrėjui bus rodomas aukcioną laimėjęs naudotojas. Administratorius galės nutraukti netinkamus aukcionus, pakeisti aukciono kategoriją.
+Norėdamas nusipirkti aukcionuose parduodamas prekes bei kurti aukcionus naudotojas sistemoje turės užsiregistruoti. Užsiregistruodamas naudotojas turės nurodyti savo pavadinimą bei elektroninį paštą. Užsiregistravęs naudotojas galės sukurti aukcioną, priskirti aukcionui kategoriją ir nustatyti aukciono pabaigos laiką. Taip pat užsiregistravęs vartotojas galės statyti aukcionuose, kai pasirinks norimą statymo sumą. Pasibaigus aukcionui, jo kūrėjui bus rodomas aukcioną laimėjęs naudotojas. Administratorius galės nutraukti netinkamus aukcionus, pakeisti aukciono kategoriją.
 
 ## 1.2. Funkciniai reikalavimai
 
@@ -42,14 +42,22 @@ Užsiregistravęs naudotojas galės:
 7.	Peržiūrėti kitų sukurtus aktyvius aukcionus;
    
 8.	Redaguoti savo aukcionus.
+
+9. Naikinti savo aukcionus.
     
-9.	Peržiūrėti kategorijas.
+10. Peržiūrėti kategorijas.
+    
+11. Peržiūrėti savo statymus.
+
+12. Naikinti savo statymus.
+
+13. Redaguoti savo statymus.
  
 Administratorius galės:
 
 1.	Panaikinti netinkamus aukcionus;
 
-2.	Peržiūrėti aktyvius aukcionus;
+2.	Peržiūrėti visus aukcionus;
 
 3.	Šalinti naudotojus;
 
@@ -58,10 +66,8 @@ Administratorius galės:
 5.	Redaguoti kategorijas;
    
 6.	Šalinti kategorijas;
-   
-7.	Peržiūrėti kategorijas.
-   
-8.	Atlikti tuos pačius veiksmus kaip ir užsiregistravęs naudotojas.
+
+7.	Atlikti tuos pačius veiksmus kaip ir užsiregistravęs naudotojas.
 
 
 # 2.	Sistemos architektūra
@@ -70,7 +76,7 @@ Sistemos sudedamosios dalys:
 
 •	Kliento pusė (ang. Front-End) – naudojant Angular karkasą;
 
-•	Serverio pusė (angl. Back-End) – naudojant .NET 7. Duomenų bazė – MS SQL.
+•	Serverio pusė (angl. Back-End) – naudojant .NET 7. Duomenų bazė – PostgreSQL.
 
 2.1 pav. Sistemos diegimo diagrama
 ![image](https://github.com/GintarasBeskajev/Auction_Finder/assets/100523608/8925cabd-8643-4797-bd77-8b94c14c88c4)
