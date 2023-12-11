@@ -59,7 +59,7 @@ builder.Services.AddCors(options =>
             //http://localhost:4200
             //https://auction-finder-frontend-9lqyri67u-gintaras-projects.vercel.app
             //https://auction-finder-frontend.vercel.app
-            builder.WithOrigins("http://localhost:4200")
+            builder.WithOrigins("https://auction-finder-frontend.vercel.app")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials();
