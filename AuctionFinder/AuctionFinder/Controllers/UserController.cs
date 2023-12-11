@@ -34,8 +34,9 @@ namespace AuctionFinder.Controllers
         [Route("auctions")]
         [HttpGet]
         [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
-        public async Task<ActionResult<List<AuctionDto>>> GetAuctions(int categoryId)
+        public async Task<ActionResult<List<AuctionDto>>> GetAuctions()
         {
+            var categories = await _categoriesRepository.GetManyAsync();
             var auctions = await _auctionsRepository.GetManyAsync();
 
             return auctions.Where(entity => entity.UserId == User.FindFirstValue(JwtRegisteredClaimNames.Sub)).Select(entity => new AuctionDto(entity.Id, entity.Name,
@@ -45,8 +46,10 @@ namespace AuctionFinder.Controllers
         [Route("bids")]
         [HttpGet]
         [Authorize(Roles = AuctionFinderRoles.AuctionUser)]
-        public async Task<ActionResult<List<GetBidDto>>> GetMany(int categoryId, int auctionId)
+        public async Task<ActionResult<List<GetBidDto>>> GetMany()
         {
+            var categories = await _categoriesRepository.GetManyAsync();
+            var auctions = await _auctionsRepository.GetManyAsync();
             var bids = await _bidsRepository.GetManyAsync();
             List<FinalBid> finalBids = new List<FinalBid>();
 
