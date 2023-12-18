@@ -128,7 +128,7 @@ namespace AuctionFinder.Controllers
             user.ForceRelogin = true;
             await _userManager.UpdateAsync(user);
 
-            return Ok("Logout successful");
+            return Ok();
         }
     }
 }
